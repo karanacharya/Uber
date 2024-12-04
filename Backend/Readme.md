@@ -29,7 +29,7 @@ The request body must be in JSON format and include the following fields:
 "password": "securepassword"
 }
 
-## Responses
+re## Responses
 
 ### Success
 
@@ -60,5 +60,5 @@ The request body must be in JSON format and include the following fields:
 
 
 ## Notes
-- Ensure that all required fields are provided in the request body.
+-  PLease make sure that all required fields are provided in the request body.
 - The email must be unique; if a user with the same email already exists, the registration will fail.
