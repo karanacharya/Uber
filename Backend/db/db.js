@@ -1,4 +1,8 @@
+// THE WORK OF THIS FILE IS TO ONLY CONNECT TO MONGOOSE DATABASE AND IF ANY ERROR OCCURS THEN CONSOILE LOG THE ERROR.
+
+
 const mongoose = require("mongoose");
+
 
  function connectToDb() {
      mongoose.connect(process.env.DB_CONNECT,).then(()=>{

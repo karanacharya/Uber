@@ -29,21 +29,21 @@ The request body must be in JSON format and include the following fields:
 "password": "securepassword"
 }
 
-re## Responses
+## Responses
 
 ### Success
 
 - **Status Code**: `200 OK`
 - **Response Body**:
-        {
-            "Token": "your_jwt_token",
-            "user": {
-            "fullname": {
-            "firstname": "John",
-            "lastname": "Doe"
-        },
-            "email": "john.doe@example.com",
-            "socketId": null
+  {
+      "Token": "your_jwt_token",
+      "user": {
+      "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+  },
+      "email": "john.doe@example.com",
+      "socketId": null
   }
   }
 
@@ -57,8 +57,59 @@ re## Responses
   "location": "body"
   }
 
+## Notes
+-  Please make sure that all required fields are provided in the request body.
+- The email must be unique; if a user with the same email already exists, the registration will fail.
 
+# User Login Endpoint
+
+## Endpoint
+
+`POST /users/login`
+
+## Description
+
+This endpoint allows an existing user to log in by providing their email and password. It validates the input data and checks the credentials against the database. If the login is successful, it returns a JSON Web Token (JWT) for authentication.
+
+## Required Data
+
+The request body must be in JSON format and include the following fields:
+
+- **email**: A string representing the user's email address (required). It must be a valid email format.
+- **password**: A string with a minimum length of 6 characters (required).
+
+### Example Request Body
+
+{
+"email": "john.doe@example.com",
+"password": "securepassword"
+}
+
+## Responses
+
+### Success
+
+- **Status Code**: `200 OK`
+- **Response Body**:
+  {
+      "Token": "your_jwt_token",
+      "user": {
+      "fullname": {
+      "firstname": "John",
+      "lastname": "Doe"
+  },
+      "email": "john.doe@example.com",
+      "socketId": null
+  }
+  }
+
+### Client Error
+
+- **Status Code**: `401 Unauthorized`
+- **Response Body**:
+  {
+  "message": "Invalid Email or Password"
+  }
 
 ## Notes
--  PLease make sure that all required fields are provided in the request body.
-- The email must be unique; if a user with the same email already exists, the registration will fail.
+- Ensure that the email and password are correct. If the credentials do not match, the login will fail.
