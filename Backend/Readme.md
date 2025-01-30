@@ -113,3 +113,40 @@ The request body must be in JSON format and include the following fields:
 
 ## Notes
 - Ensure that the email and password are correct. If the credentials do not match, the login will fail.
+
+# User Logout Endpoint
+
+## Endpoint
+
+`GET /users/logout`
+
+## Description
+
+This endpoint allows a logged-in user to log out by invalidating their current session token. It clears the authentication token from the client's cookies and adds the token to a blacklist to prevent further use.
+
+## Required Data
+
+No request body is required for this endpoint. The token is expected to be sent via cookies or the `Authorization` header.
+
+## Responses
+
+### Success
+
+- **Status Code**: `200 OK`
+- **Response Body**:
+  {
+      "message": "Logged out"
+  }
+
+### Client Error
+
+- **Status Code**: `401 Unauthorized`
+- **Response Body**:
+  {
+      "message": "No token provided"
+  }
+
+## Notes
+
+- Ensure that the user is logged in before attempting to log out. If no valid token is provided, the logout will fail.
+- The token is invalidated by adding it to a blacklist, ensuring it cannot be used again.
