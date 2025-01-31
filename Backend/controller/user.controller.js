@@ -71,14 +71,14 @@ module.exports.loginUser = async (req, res, next) => {
 }
 
 
-//Profile of the user
+//Profile controller
 module.exports.getUserProfile = async (req,res,next)=>{
     
     res.status(200).json(req.user);
 }
 
 
-//To logout a user
+//Logout controller
 module.exports.logoutUser = async(req,res,next)=>{
 
      res.clearCookie('token');
