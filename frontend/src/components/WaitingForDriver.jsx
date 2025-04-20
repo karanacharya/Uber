@@ -1,6 +1,8 @@
 import React from "react";
 
 const WaitingForDriver = (props) => {
+
+
   return (
     <div>
       <h5
@@ -20,9 +22,10 @@ const WaitingForDriver = (props) => {
         />
 
         <div className="text-right">
-          <h2 className="text-lg font-medium">Karan</h2>
-          <h4 className="text-xl font-semibold -mt-1 -mb-1">MP04 OD 8200</h4>
+          <h2 className="text-lg font-medium capitalize">{props.ride?.captain.fullname.firstname}</h2>
+          <h4 className="text-xl font-semibold -mt-1 -mb-1">{props.ride?.captain.vehicle.plate}</h4>
           <p className="text-sm text-gray-600">BMW Alto</p>
+          <h1 className="text-lg font-semibold"> {props.ride?.otp} </h1>
         </div>
       </div>
 
@@ -33,7 +36,7 @@ const WaitingForDriver = (props) => {
             <div>
               <h3 className="text-lg font-medium">562/11-A</h3>
               <p className="text-gray-600 -mt-1 text-sm">
-                Kankaria Talab , Bhopal
+              {props.ride?.pickup}
               </p>
             </div>
           </div>
@@ -42,7 +45,7 @@ const WaitingForDriver = (props) => {
             <div>
               <h3 className="text-lg font-medium">562/11-A</h3>
               <p className="text-gray-600 -mt-1 text-sm">
-                Kankaria Talab , Bhopal
+              {props.ride?.destination}
               </p>
             </div>
           </div>
@@ -50,7 +53,7 @@ const WaitingForDriver = (props) => {
           <div className="flex p-3  gap-5 items-center">
             <i className="ri-currency-line"></i>
             <div>
-              <h3 className="text-lg  font-medium">₹193.20</h3>
+              <h3 className="text-lg  font-medium">₹{Math.floor(props.ride?.fare)}</h3>
               <p className="text-gray-600 -mt-1 text-sm">Cash Cash</p>
             </div>
           </div>

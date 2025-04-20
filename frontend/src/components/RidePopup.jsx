@@ -22,7 +22,7 @@ const RidePopup = (props) => {
               src="https://imgs.search.brave.com/oXcFMa_Ci0zo-AnjwlUktG37n60uU-aCSYgV5asjGnw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS1waG90by9o/YW5kc29tZS1zZW5z/aXRpdmUtcmVkLWhl/YWQtbWFuLXNtaWxp/bmdfMjMtMjE0OTUw/OTgyMC5qcGc_c2Vt/dD1haXNfaHlicmlk"
               alt=""
             />
-            <h2 className="text-lg font-medium">Harsh Patel</h2>
+            <h2 className="text-lg font-medium">{props.ride?.user.fullname.firstname + " " + props.ride?.user.fullname.lastname }</h2>
           </div>
           <h5 className="text-lg font-semibold">2.2 KM</h5>
         </div>
@@ -34,7 +34,7 @@ const RidePopup = (props) => {
               <div>
                 <h3 className="text-lg font-medium">562/11-A</h3>
                 <p className="text-gray-600 -mt-1 text-sm">
-                  Kankaria Talab , Bhopal
+                 {props.ride?.pickup}
                 </p>
               </div>
             </div>
@@ -43,7 +43,7 @@ const RidePopup = (props) => {
               <div>
                 <h3 className="text-lg font-medium">562/11-A</h3>
                 <p className="text-gray-600 -mt-1 text-sm">
-                  Kankaria Talab , Bhopal
+                {props.ride?.destination}
                 </p>
               </div>
             </div>
@@ -51,7 +51,7 @@ const RidePopup = (props) => {
             <div className="flex p-3  gap-5 items-center">
               <i className="ri-currency-line"></i>
               <div>
-                <h3 className="text-lg  font-medium">₹193.20</h3>
+                <h3 className="text-lg  font-medium">₹{Math.floor(props.ride?.fare)}</h3>
                 <p className="text-gray-600 -mt-1 text-sm">Cash Cash</p>
               </div>
             </div>
@@ -73,6 +73,7 @@ const RidePopup = (props) => {
             <button
               onClick={() => {
                 props.setConfirmRidePopupPanel(true);
+                props.confirmRide();
               }}
               className="  bg-green-500 text-white font-semibold p-3 px-10 rounded-lg"
             >

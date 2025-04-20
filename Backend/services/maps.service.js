@@ -1,10 +1,10 @@
 const axios = require("axios");
+const captainModel = require("../models/captain.model");
 
-//The main function which will fetch the coordinates of the address
-module.exports.getAdressCoordinate = async (adress) => {
+module.exports.getAddressCoordinate = async (address) => {
   const apiKey = process.env.GOOGLE_MAPS_API;
   const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-    adress
+    address
   )}&key=${apiKey}`;
 
   try {
@@ -24,10 +24,9 @@ module.exports.getAdressCoordinate = async (adress) => {
   }
 };
 
-//The main funciton which will fetch the distance between two addresses
 module.exports.getDistanceTime = async (origin, destination) => {
   if (!origin || !destination) {
-    throw new Error("Origin and Destination are required");
+    throw new Error("Origin and destination are required");
   }
 
   const apiKey = process.env.GOOGLE_MAPS_API;
@@ -47,31 +46,85 @@ module.exports.getDistanceTime = async (origin, destination) => {
     } else {
       throw new Error("Unable to fetch distance and time");
     }
-  } catch (error) {
-    console.error(error);
-    throw error;
+  } catch (err) {
+    console.error(err);
+    throw err;
   }
 };
 
-module.exports.getSuggestions = async (input) => {
+module.exports.getAutoCompleteSuggestions = async (input) => {
+  if (!input) {
+    throw new Error("query is required");
+  }
 
-    if(!input){
-        throw new Error('Query is required');
+  const apiKey = process.env.GOOGLE_MAPS_API;
+  const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(
+    input
+  )}&key=${apiKey}`;
+
+  try {
+    const response = await axios.get(url);
+    if (response.data.status === "OK") {
+      return response.data.predictions
+        .map((prediction) => prediction.description)
+        .filter((value) => value);
+    } else {
+      throw new Error("Unable to fetch suggestions");
     }
-    const apiKey = process.env.GOOGLE_MAPS_API;
-    const url = `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${encodeURIComponent(
-        input
-    )}&key=${apiKey}`;
-    
-    try {
-        const response = await axios.get(url);
-        if (response.data.status === "OK") {
-        return response.data.predictions;
-        } else {
-        throw new Error("Unable to fetch suggestions");
-        }
-    } catch (error) {
-        console.error(error);
-        throw error;
+  } catch (err) {
+    console.error(err);
+    throw err;
+  }
+};
+
+
+
+
+
+module.exports.getCaptainsInTheRadius = async (ltd, lng, radius) => {
+  const captains = await captainModel.find(); 
+
+  
+ 
+
+  const EARTH_RADIUS_KM = 6371;
+
+ 
+  const getDistanceFromLatLng = (lat1, lon1, lat2, lon2) => {
+    const toRad = (value) => (value * Math.PI) / 180;
+
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return EARTH_RADIUS_KM * c;
+  };
+
+
+  const nearbyCaptains = captains.filter((captain) => {
+    if (
+      !captain.location ||
+      typeof captain.location.ltd !== "number" ||
+      typeof captain.location.lng !== "number"
+    ) {
+      return false;
     }
-}
+
+    const distance = getDistanceFromLatLng(
+      ltd,
+      lng,
+      captain.location.ltd,
+      captain.location.lng
+    );
+
+    return distance <= radius;
+  });
+
+  
+
+  return nearbyCaptains;
+};

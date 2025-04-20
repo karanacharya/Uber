@@ -20,11 +20,12 @@ const VehiclePanel = (props) => {
       <div
         onClick={() => {
           props.setConfirmRidePanel(true);
+          props.setVehicleType("car");
         }}
-        className="flex border-2 border-black bg-gray-100 mb-5 rounded-xl w-full p-3 items-center justify-between"
+        className="flex border-2 border-black bg-white-100 mb-5 rounded-xl w-full p-3 items-center justify-between"
       >
         <img
-          className="h-15"
+          className="h-16"
           src="https://www.uber-assets.com/image/upload/f_auto,q_auto:eco,c_fill,h_538,w_956/v1646663215/assets/6e/e50c1b-2174-4c97-83a1-bfd4544689d0/original/uberX.png"
           alt=""
         />
@@ -40,15 +41,16 @@ const VehiclePanel = (props) => {
             Affordable, compact rides
           </p>
         </div>
-        <h2 className="text-lg font-semibold">₹193.20</h2>
+        <h2 className="text-lg font-semibold">₹{Math.floor(props.fare.car)}</h2>
       </div>
 
       {/* Bike Section */}
       <div
         onClick={() => {
           props.setConfirmRidePanel(true);
+          props.setVehicleType("moto");
         }}
-        className="flex p-3 w-full border-2 border-black bg-gray-100 rounded-xl mb-5 justify-between items-center"
+        className="flex p-3 w-full border-2 border-black bg-white-100 rounded-xl mb-5 justify-between items-center"
       >
         <img
           className="h-14"
@@ -67,15 +69,16 @@ const VehiclePanel = (props) => {
             Affordable, motorcycle rides
           </p>
         </div>
-        <h2 className="text-lg font-semibold">₹65</h2>
+        <h2 className="text-lg font-semibold">₹{Math.floor(props.fare.moto)}</h2>
       </div>
 
       {/* Auto Section */}
       <div
         onClick={() => {
           props.setConfirmRidePanel(true);
+          props.setVehicleType("auto");
         }}
-        className="flex p-3 w-full border-2 border-black bg-gray-100  rounded-xl mb-5 justify-between items-center"
+        className="flex p-3 w-full border-2 border-black bg-white-100  rounded-xl mb-5 justify-between items-center"
       >
         <img
           className="h-14"
@@ -94,7 +97,7 @@ const VehiclePanel = (props) => {
             Affordable, auto rides
           </p>
         </div>
-        <h2 className="text-lg font-semibold">₹118.20</h2>
+        <h2 className="text-lg font-semibold">₹{Math.floor(props.fare.auto)}</h2>
       </div>
     </div>
   );

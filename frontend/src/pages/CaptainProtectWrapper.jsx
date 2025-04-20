@@ -9,7 +9,13 @@ const CaptainProtectWrapper = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const { captain, setCaptain } = useContext(CaptainDataContext);
 
+
+
+  
+ 
   useEffect(() => {
+
+   
     if (!token) {
       navigate("/captain-login");
     }
@@ -35,8 +41,14 @@ const CaptainProtectWrapper = ({ children }) => {
       
   }, [token]);
 
+   if(captain == null){
+     return <div>Loading the captain is null...</div>
+   }
+   
+   
+
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>Loading....</div>;
   }
 
   return <>{children}</>;

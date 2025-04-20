@@ -24,6 +24,7 @@ const CaptainContext = ({ children }) => {
 
     }
 
+   
   return (
   
       <CaptainDataContext.Provider value={value}>

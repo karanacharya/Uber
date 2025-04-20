@@ -40,18 +40,22 @@ module.exports.getDistanceTime = async (req, res, next) => {
 
 
 //Controller to get the suggestions according to a certain address
-module.exports.getSuggestions = async (req, res) => {
+module.exports.getAutoCompleteSuggestions = async (req, res, next) => {
+
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
 
-    const { input } = req.query;
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+          return res.status(400).json({ errors: errors.array() });
+      }
 
-    const suggestions = await mapService.getSuggestions(input);
-    res.status(200).json(suggestions);
-  } catch (error) {
-    res.status(404).json({ message: "Internal server error" });
+      const { input } = req.query;
+
+      const suggestions = await mapService.getAutoCompleteSuggestions(input);
+
+      res.status(200).json(suggestions);
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
   }
-};
+}
