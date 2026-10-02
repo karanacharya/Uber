@@ -176,10 +176,3 @@ Auth is cookie/JWT-based; protected routes use the auth middleware.
 
 ---
 
-## License
-
-ISC (or update as needed.)
-
----
-
-You can copy everything above and paste it into your GitHub repo’s **README** (create or edit `README.md` in the root, then commit and push).
